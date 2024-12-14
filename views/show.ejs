@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table, th, td{
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Username</th>
+            <th>Email</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>abc</td>
+            <td>abc@gamil.com</td>
+        </tr>
+        
+
+        <!-- a loop for all the users -->
+        <% for (const user of users) {%>
+            <tr>
+                <td><%= user.id %></td>
+                <td><%= user.username %></td>
+                <td><%= user.email %></td>
+            </tr>
+        <% } %>
+    </table>
+</body>
+</html>

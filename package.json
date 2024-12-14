@@ -1,0 +1,20 @@
+{
+  "name": "database-crud",
+  "version": "1.0.0",
+  "description": "A small repo to test & practice all CRUD operations with the SQL database created using the Faker package This would create a fundamental understanding of using RESTful APIs with databases",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@faker-js/faker": "^9.3.0",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "method-override": "^3.0.0",
+    "mysql2": "^3.11.5",
+    "uuid": "^11.0.3"
+  }
+}
