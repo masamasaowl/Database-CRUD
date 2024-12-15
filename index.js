@@ -94,8 +94,7 @@ app.get("/", (req,res) => {
         });
     } catch (err) {
         console.log(err);
-    }
-    connection.end();   
+    }   
 });
 
 // ================== View Route ================
@@ -116,5 +115,116 @@ app.get("/user", (req,res) => {
 
 
 
-// ================== Create Route ===============
+// ================== Edit Route ===============
+app.get("/user/:id/edit", (req,res) => {
+    let {id} = req.params;
+    
+    // now on the basis of id we search for username and email in our databse
+    // we send id in "" so it goes as a string
+    let q = `SELECT username, email FROM user WHERE id = "${id}";`;
 
+    try {
+        connection.query(q, (err,result) => {
+            if (err) throw err;
+            console.log(result);
+            res.render("edit", {id,result});
+        });
+        
+    } catch (err) {
+        console.log(err);    
+    }
+});
+
+
+// patch request to recieve an do the update in SQL
+app.patch("/user/:id", (req,res) => {
+    let {id} = req.params;
+
+    // take usename and password from req.body
+    let {username: newUsername, password: newPassword} = req.body;
+
+    // now to only get the value of password we run the SELECT * query so the code inside else block could work alone also 
+    let q = `SELECT * FROM user WHERE id = "${id}";`; 
+
+    try {
+        connection.query(q, (err,result) => {
+            if (err) throw err;
+            let user = result[0];
+            
+            // we check the correct password
+            if(newPassword != user.password){
+                res.send("incorrect password");
+            } else {
+
+                // could go as a standalone also
+
+                // query to update user
+                let q2 = `UPDATE user SET username = '${newUsername}' WHERE id = '${id}'`;
+
+                try {
+                    connection.query(q2, (err,result) => {
+                        if (err) throw err;
+                        res.redirect("/user")
+                    });
+                } catch (err) {
+                    console.log(err);    
+                }        
+            }
+        });
+        
+    } catch (err) {
+        console.log(err);    
+    }
+});
+
+// ================== Create Route =============
+// a form to accept the inputs
+app.get("/user/new", (req,res) => {
+    res.render("new");
+});
+
+app.post("/user", (req,res) => {
+    let {username,email,password} = req.body;
+    console.log(req.body);
+    let newId = uuidv4();
+
+    // query to add user in SQL
+    let q = `INSERT INTO user VALUES ('${newId}', '${username}','${email}', '${password}');`;
+
+    try {
+        connection.query(q, (err,result) => {
+            if (err) throw err;
+            console.log(result);
+        });
+        
+    } catch (err) {
+        console.log(err);    
+    }
+
+    res.redirect("/user");
+});
+
+
+// =================== Delete Route ==============
+app.delete("/user/:id/delete", (req,res) => {
+    let {id} = req.params;
+     
+    // a query to delete the user
+    let q = `DELETE FROM user WHERE id = '${id}';`;
+
+    try {
+        connection.query(q, (err,result) => {
+            if (err) throw err;
+            console.log(result);
+        });
+        
+    } catch (err) {
+        console.log(err);    
+    }
+
+    res.redirect("/user");
+});
+
+
+
+// ==================== THANK YOU SO MUCH SHRADDHA MA'AM FOR HELPING ME BULID SUCH A GREAT APPLICATION ======================

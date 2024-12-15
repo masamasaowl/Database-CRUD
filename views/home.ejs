@@ -4,9 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
     <h2>The total number of users are : <%= count %></h2>
-    <button>Join us!</button>
+    <form method="get" action="/user/new">
+        <button>Join us!</button>
+    </form>
+    <form method="get" action="/user">
+        <button>Our Registered Users</button>
+    </form>
 </body>
 </html>
